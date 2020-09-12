@@ -3,14 +3,21 @@ package com.vsite;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
 public class Main {
 
     public static void main(String[] args) throws Exception{
-        display(new File("C:\\TEST2\\first.eml"));
+        String path ="C:\\TEST2";
+        File folder = new File(path);
+        File [] listOfFiles = folder.listFiles();
+        if (listOfFiles != null) {
+            for(File file:listOfFiles)
+            {
+                display(file);
+            }
+        }
 
     }
 
@@ -22,6 +29,6 @@ public class Main {
         System.out.println("Subject : " + message.getSubject());
         System.out.println("From : " + message.getFrom()[0]);
         System.out.println("--------------");
-        System.out.println("Body : " +  message.getContent());
+        //System.out.println("Body : " +  message.getContent());
     }
 }
