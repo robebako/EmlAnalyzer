@@ -13,6 +13,7 @@ public class EmlForm extends JFrame{
     private JLabel lbl_countOfFiles;
     private JLabel lbl_SelectedDestinationFolder;
     private JButton btn_Run;
+    private JLabel lbl_CountOfFilesAttRemoved;
 
     public EmlForm(String title)  {
         super(title);
@@ -30,7 +31,7 @@ public class EmlForm extends JFrame{
                     File folder = fileChooser.getSelectedFile();
                     EmlAnalyzer.setSourceFolder(folder);
                     lbl_SelectedSourceFolder.setText("Folder Selected: " + folder.getAbsolutePath());
-                    lbl_countOfFiles.setText("Count of files: " + String.valueOf(folder.listFiles().length));
+                    lbl_countOfFiles.setText("Count of files: " + folder.listFiles().length);
                 }else{
                     lbl_SelectedSourceFolder.setText("Open command canceled");
                     lbl_countOfFiles.setText("Count of files: ");
@@ -56,7 +57,8 @@ public class EmlForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
-                    EmlAnalyzer.analyze();
+                    EmlAnalyzer.iterateEmls();
+                    lbl_CountOfFilesAttRemoved.setText("Count of files (att. removed): "+ EmlAnalyzer.getNumberOfEmlsWithAtt());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

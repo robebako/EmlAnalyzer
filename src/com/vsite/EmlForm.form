@@ -82,6 +82,14 @@
           <text value="Run"/>
         </properties>
       </component>
+      <component id="c9577" class="javax.swing.JLabel" binding="lbl_CountOfFilesAttRemoved">
+        <constraints>
+          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Count of files (att. removed):"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>
