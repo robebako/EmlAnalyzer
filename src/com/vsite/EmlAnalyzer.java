@@ -4,23 +4,23 @@ import java.io.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 
-public class Main {
+public class EmlAnalyzer {
+    private static File [] listOfFiles;
+    private static File sourceFolder;
+    private static File destinationFolder;
 
-    public static void main(String[] args) throws Exception{
-        String readPath ="C:\\TEST2";
-        File folder = new File(readPath);
-        File [] listOfFiles = folder.listFiles();
-        if (listOfFiles != null) {
-            for(File file:listOfFiles)
+    public static void analyze() throws Exception {
+        setListOfFiles(sourceFolder.listFiles());
+        if (getListOfFiles() != null) {
+            for(File file: getListOfFiles())
             {
                 display(file);
             }
         }
-
     }
 
     public static void display(File emlFile) throws Exception{
-
+        int cntr=0;
         InputStream source = new FileInputStream(emlFile);
         Message message = new MimeMessage(Session.getInstance(System.getProperties()),source);
 
@@ -29,14 +29,12 @@ public class Main {
         System.out.println("--------------");
         //System.out.println("Body : " +  message.getContent());
 
-        if(hasAttachments(message))
+        if(hasAttachments(message)){
+            cntr++;
             System.out.println("Has attachment!");
-
-        String savePath ="C:\\TEST3";
-        new File(savePath).mkdir();
+        }
         String name = message.getSubject().replaceAll("[:\\\\/*?|<> \"]", "_");
-        savePath += "\\" + name+".eml";
-        OutputStream dest = new FileOutputStream(new File(savePath));
+        OutputStream dest = new FileOutputStream(new File(String.valueOf(getDestinationFolder())+"\\"+name+".eml"));
         try {
             message.writeTo(dest);
         }
@@ -50,5 +48,25 @@ public class Main {
             return mp.getCount() > 1;
         }
         return false;
+    }
+
+    public static File[] getListOfFiles() {
+        return listOfFiles;
+    }
+
+    public static void setListOfFiles(File[] listOfFiles) {
+        EmlAnalyzer.listOfFiles = listOfFiles;
+    }
+
+    public static void setSourceFolder(File sourceFolder) {
+        EmlAnalyzer.sourceFolder = sourceFolder;
+    }
+
+    public static File getDestinationFolder() {
+        return destinationFolder;
+    }
+
+    public static void setDestinationFolder(File destinationFolder) {
+        EmlAnalyzer.destinationFolder = destinationFolder;
     }
 }
