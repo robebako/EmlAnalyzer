@@ -23,22 +23,13 @@ public class EmlAnalyzer {
     public static void removeAttachmentsAndSave(File emlFile) throws Exception{
         InputStream source = new FileInputStream(emlFile);
         Message message = new MimeMessage(Session.getInstance(System.getProperties()),source);
-
-        //System.out.println("Body : " +  message.getContent());
-
         if(hasAttachments(message)){
-            System.out.println("Subject : " + message.getSubject());
-            System.out.println("From : " + message.getFrom()[0]);
-            System.out.println("--------------");
             numberOfEmlsWithAtt++;
-            System.out.println("Has attachment!");
             Multipart mp = (Multipart) message.getContent();
             for (int i=mp.getCount()-1; i >=0 ;--i){
                 MimeBodyPart body = (MimeBodyPart) mp.getBodyPart(i);
                 if(!body.isMimeType("text/plain")){
                     mp.removeBodyPart(body);
-                    System.out.println(body.getInputStream());
-                    System.out.println(body.getContentType()+" : "+ body.getFileName());
                 }
                 //body.setDataHandler(body.getDataHandler());
             }
