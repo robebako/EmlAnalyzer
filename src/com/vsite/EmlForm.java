@@ -56,6 +56,10 @@ public class EmlForm extends JFrame{
         btn_Run.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                if(EmlAnalyzer.getDestinationFolder() == null || EmlAnalyzer.getSourceFolder()==null){
+                    JOptionPane.showMessageDialog(null,"Set the Open and Save to folders first!","WARNING",JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
                 try {
                     EmlAnalyzer.iterateEmls();
                     lbl_CountOfFilesAttRemoved.setText("Count of files (att. removed): "+ EmlAnalyzer.getNumberOfEmlsWithAtt());

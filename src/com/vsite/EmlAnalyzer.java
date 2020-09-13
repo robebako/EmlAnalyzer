@@ -45,7 +45,7 @@ public class EmlAnalyzer {
             message.saveChanges();
         }
         String name = message.getSubject().replaceAll("[:\\\\/*?|<> \"]", "_");
-        OutputStream dest = new FileOutputStream(new File(getDestinationFolder() +"\\"+name+".eml"));
+        OutputStream dest = new FileOutputStream(new File(String.valueOf(getDestinationFolder())+"\\"+name+".eml"));
         try {
             message.writeTo(dest);
         }
@@ -69,6 +69,9 @@ public class EmlAnalyzer {
         EmlAnalyzer.listOfFiles = listOfFiles;
     }
 
+    public static File getSourceFolder() {
+        return sourceFolder;
+    }
     public static void setSourceFolder(File sourceFolder) {
         EmlAnalyzer.sourceFolder = sourceFolder;
     }
